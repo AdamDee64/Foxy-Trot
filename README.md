@@ -15,4 +15,9 @@ Main character art by Ethan's Pixel Art Shop (not included on the github page, c
 https://elthen.itch.io/2d-pixel-art-fox-sprites
 
 
-Version 0.0 - Fox sprite animation complete
+Version: 
+0.0.0 - Fox sprite animation complete 
+0.0.1 - Foxy can now jump via space bar! 
+
+Next:
+Bounding box for foxy, collision detection and delta time
