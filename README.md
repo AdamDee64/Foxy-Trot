@@ -11,13 +11,13 @@ https://odin-lang.org/
 https://www.raylib.com/
 
 
-Main character art by Ethan's Pixel Art Shop (not included on the github page, can be found here for free)
+Main character art by Ethan's Pixel Art Shop (not included on the github page, can be found here for free) <br>
 https://elthen.itch.io/2d-pixel-art-fox-sprites
 
 
-Version: 
+Version: <br>
 0.0.0 - Fox sprite animation complete <br>
-0.0.1 - Foxy can now jump via space bar! 
+0.0.1 - Foxy can now jump via space bar! <br>
 
-Next:
-Bounding box for foxy, collision detection and delta time
+Next:<br>
+Bounding box for foxy, collision detection and delta time <br>
