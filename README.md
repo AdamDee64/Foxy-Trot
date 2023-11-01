@@ -16,7 +16,7 @@ https://elthen.itch.io/2d-pixel-art-fox-sprites
 
 
 Version: 
-0.0.0 - Fox sprite animation complete 
+0.0.0 - Fox sprite animation complete <br>
 0.0.1 - Foxy can now jump via space bar! 
 
 Next:
