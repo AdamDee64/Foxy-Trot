@@ -18,6 +18,8 @@ https://elthen.itch.io/2d-pixel-art-fox-sprites
 Version: <br>
 0.0.0 - Fox sprite animation complete <br>
 0.0.1 - Foxy can now jump via space bar! <br>
+0.0.2 - collision detection between fox and obstacle works. Delta time added to obstacle movement<br>
 
 Next:<br>
-Bounding box for foxy, collision detection and delta time <br>
+array of obstacles with different shapes, import more sprites to represent obstacles <br>
+increasing game speed (50-80 seems to be a good range)<br>

@@ -12,6 +12,11 @@ main :: proc() {
     HORIZON :: 120 * SCALE
     FPS     :: 60
 
+    delta   : f32 
+    game_speed : f32 = 80
+
+    show_collision_box := true
+
     Timer :: struct {
         active          : bool,
         wait_time       : f64,
@@ -32,7 +37,8 @@ main :: proc() {
         timer           : Timer,
         rec             : rl.Rectangle,
         pos             : rl.Rectangle,
-        origin          : rl.Vector2
+        origin          : rl.Vector2,
+        bb              : rl.Rectangle
     }
 
     // switches to another animation and starts it at frame 0
@@ -60,6 +66,10 @@ main :: proc() {
     foxy.rec    = {0, f32(foxy.index * foxy.size), f32(foxy.size), f32(foxy.size)}
     foxy.pos    = {32, HORIZON, f32(foxy.size * foxy.scale), f32(foxy.size * foxy.scale)}
     foxy.origin = {0, f32(foxy.size * foxy.scale)}
+    foxy.bb     = {64, foxy.pos.y - 44, 16 * SCALE, 10 * SCALE}
+
+    obstacle : rl.Rectangle = {0, HORIZON - 44, 10 * SCALE, 10 * SCALE}
+    foxy_hit := false
 
     animate :: enum{
         IDLE,
@@ -87,6 +97,13 @@ main :: proc() {
     ChangeAnimation(&foxy, i32(animate.RUN))
     
     for !rl.WindowShouldClose() {
+        delta = rl.GetFrameTime()
+
+        obstacle.x -= SCALE * 2 * game_speed * delta
+        if obstacle.x <= 0 - obstacle.width {
+            obstacle.x = WIDTH
+        }
+
 
         if foxy.timer.active {
             foxy.timer.current_time = rl.GetTime() - foxy.timer.last_time
@@ -102,11 +119,14 @@ main :: proc() {
             if foxy.pos.y < HORIZON - fall_speed{ // include fall speed so foxy doesn't land beneath the ground 
                 fall_speed += GRAVITY
                 foxy.pos.y += fall_speed
+                foxy.bb.y = foxy.pos.y - 44
             } else {
                 fall_speed = 0
                 foxy.pos.y = HORIZON
+                foxy.bb.y = foxy.pos.y - 44
                 falling = false
                 ChangeAnimation(&foxy, i32(animate.RUN))
+                
             }
         }
 
@@ -117,8 +137,13 @@ main :: proc() {
             SetFrame(&foxy, 3)
         }
 
+        if rl.IsKeyPressed(rl.KeyboardKey.X){
+            show_collision_box = !show_collision_box
+        }
+
         if jumping {
             foxy.pos.y -= JUMP_STR
+            foxy.bb.y = foxy.pos.y - 44
             if fall_speed > JUMP_STR {
                 jumping = false
                 fall_speed = 0
@@ -127,12 +152,27 @@ main :: proc() {
 
         }
 
+        if rl.CheckCollisionRecs (foxy.bb, obstacle) {
+            foxy_hit = true
+        } else {
+            foxy_hit = false
+        }
+
         rl.BeginDrawing()
         
             rl.ClearBackground(rl.DARKGRAY)
             rl.DrawRectangle(0, 0, WIDTH, HEIGHT, rl.SKYBLUE)
             rl.DrawRectangle(0, HORIZON, WIDTH, HEIGHT, rl.DARKGREEN)
             rl.DrawTexturePro(foxy_texture, foxy.rec, foxy.pos, foxy.origin, 0, rl.WHITE)
+            if show_collision_box {
+                rl.DrawRectangleRec(foxy.bb, rl.Color{210,200,100,200})
+                rl.DrawRectangleRec(obstacle, rl.Color{100, 100, 100, 200})
+            }
+            if foxy_hit {
+                rl.DrawText("Hit", 100, 100, 50, rl.BLACK)
+            }
+            
+            
 
         rl.EndDrawing()
     }
