@@ -19,7 +19,9 @@ Version: <br>
 0.0.0 - Fox sprite animation complete <br>
 0.0.1 - Foxy can now jump via space bar! <br>
 0.0.2 - collision detection between fox and obstacle works. Delta time added to obstacle movement<br>
+0.0.21 - made obstacles's bb always on so can toggle foxy's bb visibilty for testing<br>
 
 Next:<br>
+Foxy state machine to handle animation states<br>
 array of obstacles with different shapes, import more sprites to represent obstacles <br>
 increasing game speed (50-80 seems to be a good range)<br>

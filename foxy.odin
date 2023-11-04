@@ -166,8 +166,9 @@ main :: proc() {
             rl.DrawTexturePro(foxy_texture, foxy.rec, foxy.pos, foxy.origin, 0, rl.WHITE)
             if show_collision_box {
                 rl.DrawRectangleRec(foxy.bb, rl.Color{210,200,100,200})
-                rl.DrawRectangleRec(obstacle, rl.Color{100, 100, 100, 200})
+
             }
+            rl.DrawRectangleRec(obstacle, rl.Color{100, 100, 100, 200})
             if foxy_hit {
                 rl.DrawText("Hit", 100, 100, 50, rl.BLACK)
             }
