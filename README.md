@@ -23,7 +23,7 @@ Version: <br>
 0.0.3 - refactored for proper pixel-sized scaling<br>
 
 Next:<br>
-More cleaning up the code<b>
+More cleaning up the code<br>
 Foxy state machine to handle animation states<br>
 array of obstacles with different shapes, import more sprites to represent obstacles <br>
 increasing game speed (50-80 seems to be a good range)<br>
