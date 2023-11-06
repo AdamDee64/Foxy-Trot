@@ -25,6 +25,28 @@ Animated_Sprite :: struct {
     bb              : rl.Rectangle
 }
 
+Sprite :: struct {
+    rec : rl.Rectangle,
+    offset : rl.Vector2
+}
+
+CreateSpritesFromSheet :: proc(arr: ^[36]Sprite, size : f32, x : int, y : int) {
+    index := 0
+    for i in 0..<y{
+        for j in 0..<x{
+            arr[index].rec.x = f32(j) * size
+            arr[index].rec.y = f32(i) * size
+            arr[index].rec.width = size
+            arr[index].rec.height = size
+            index += 1
+        }
+    }
+
+    arr[11].offset = {-10, -8}
+    arr[8].offset = {-10, -8}
+
+}
+
 SetupFoxy :: proc(size : f32, ground : f32) -> Animated_Sprite {
     output : Animated_Sprite = {
         size, 0, 0,

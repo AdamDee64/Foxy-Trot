@@ -24,6 +24,8 @@ main :: proc() {
     show_collision_box := true
 
     obstacle : rl.Rectangle = {0, 120 - 12, 10, 10}
+    obs_offset : rl.Vector2
+
     foxy_hit := false
 
     falling := false
@@ -36,20 +38,29 @@ main :: proc() {
 
     foxy := SetupFoxy(32.0, HORIZON)
 
+    obstacles := [36]Sprite{}
+    CreateSpritesFromSheet(&obstacles, 32.0, 9, 4)
+
     rl.InitWindow(WIDTH * SCALE, HEIGHT * SCALE, TITLE)
     rl.SetTargetFPS(FPS)
-    rl.SetWindowState(rl.ConfigFlags{rl.ConfigFlag.WINDOW_UNDECORATED})
+    //rl.SetWindowState(rl.ConfigFlags{rl.ConfigFlag.WINDOW_UNDECORATED})
 
     foxy_texture : rl.Texture2D = rl.LoadTexture(".//res//foxy.png")
+    obs_texture : rl.Texture2D = rl.LoadTexture(".//res//obstacles.png")
 
     ChangeAnimation(&foxy, i32(animate.RUN))
 
     active_camera := viewport
 
+    obs_index := 11
+    obs_offset.y = obstacle.y + obstacles[obs_index].offset.y
+
     for !rl.WindowShouldClose() {
         delta = rl.GetFrameTime()
 
         obstacle.x -= 2 * game_speed * delta
+        obs_offset.x = obstacle.x + obstacles[obs_index].offset.x
+        
         if obstacle.x <= 0 - obstacle.width {
             obstacle.x = WIDTH
         }
@@ -90,6 +101,16 @@ main :: proc() {
             show_collision_box = !show_collision_box
         }
 
+        if rl.IsKeyPressed(rl.KeyboardKey.B){
+            obs_index += 1
+            if obs_index >= 36 {
+                obs_index = 0
+            }
+            fmt.println("obstacle index: ", obs_index)
+            obs_offset.y = obstacle.y + obstacles[obs_index].offset.y
+        }
+
+
         if jumping {
             foxy.pos.y -= JUMP_STR
             foxy.bb.y = foxy.pos.y + 22
@@ -115,10 +136,12 @@ main :: proc() {
         rl.DrawRectangle(0, HORIZON, WIDTH, HEIGHT - HORIZON, rl.DARKGREEN)
         rl.DrawTextureRec(foxy_texture, foxy.rec, foxy.pos, rl.WHITE)
 
+        rl.DrawTextureRec(obs_texture, obstacles[obs_index].rec, obs_offset , rl.WHITE)
+
         if show_collision_box {
             rl.DrawRectangleRec(foxy.bb, rl.Color{210,200,100,200})
+            rl.DrawRectangleRec(obstacle, rl.Color{100, 100, 100, 200})
         }
-        rl.DrawRectangleRec(obstacle, rl.Color{100, 100, 100, 200})
 
         if foxy_hit {
             rl.DrawText("Hit", i32(foxy.pos.x), HORIZON, 15, rl.BLACK)
