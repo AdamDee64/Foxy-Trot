@@ -20,14 +20,14 @@ Animated_Sprite :: struct {
     frames          : [7]i32,
     fps             : [7]f64,
     timer           : Timer,
-    rec             : rl.Rectangle,
-    pos             : rl.Vector2,
-    bb              : rl.Rectangle
+    rec             : Rect,
+    pos             : Vec2,
+    bb              : Rect
 }
 
 Sprite :: struct {
-    rec : rl.Rectangle,
-    offset : rl.Vector2
+    rec : Rect,
+    offset : Vec2
 }
 
 CreateSpritesFromSheet :: proc(arr: ^[36]Sprite, size : f32, x : int, y : int) {
@@ -42,7 +42,7 @@ CreateSpritesFromSheet :: proc(arr: ^[36]Sprite, size : f32, x : int, y : int) {
         }
     }
 
-    arr[11].offset = {-10, -8}
+    arr[11].offset = {-10, -10}
     arr[8].offset = {-10, -8}
 
 }

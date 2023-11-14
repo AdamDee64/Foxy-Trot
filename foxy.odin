@@ -4,6 +4,13 @@ import "core:fmt"
 
 import rl "vendor:raylib"
 
+Color   :: rl.Color
+Rect    :: rl.Rectangle
+Music   :: rl.Music
+Vec2    :: rl.Vector2
+
+GRASS :: Color{109, 162, 62, 255}
+
 main :: proc() {
 
     SCALE   :: 4
@@ -13,8 +20,8 @@ main :: proc() {
     FPS     :: 60
 
     viewport : rl.Camera2D = {
-        rl.Vector2{0.0, 0.0},
-        rl.Vector2{0.0, 0.0},
+        Vec2{0.0, 0.0},
+        Vec2{0.0, 0.0},
         0, SCALE
         }
 
@@ -23,8 +30,8 @@ main :: proc() {
 
     show_collision_box := true
 
-    obstacle : rl.Rectangle = {0, 120 - 12, 10, 10}
-    obs_offset : rl.Vector2
+    obstacle : Rect = {0, 120 - 8, 10, 10}
+    obs_offset : Vec2
 
     foxy_hit := false
 
@@ -133,14 +140,14 @@ main :: proc() {
         rl.ClearBackground(rl.DARKGRAY)
 
         rl.DrawRectangle(0, 0, WIDTH, HEIGHT, rl.SKYBLUE)
-        rl.DrawRectangle(0, HORIZON, WIDTH, HEIGHT - HORIZON, rl.DARKGREEN)
+        rl.DrawRectangle(0, HORIZON, WIDTH, HEIGHT - HORIZON, GRASS)
         rl.DrawTextureRec(foxy_texture, foxy.rec, foxy.pos, rl.WHITE)
 
         rl.DrawTextureRec(obs_texture, obstacles[obs_index].rec, obs_offset , rl.WHITE)
 
         if show_collision_box {
-            rl.DrawRectangleRec(foxy.bb, rl.Color{210,200,100,200})
-            rl.DrawRectangleRec(obstacle, rl.Color{100, 100, 100, 200})
+            rl.DrawRectangleRec(foxy.bb, Color{210,200,100,200})
+            rl.DrawRectangleRec(obstacle, Color{100, 100, 100, 200})
         }
 
         if foxy_hit {
